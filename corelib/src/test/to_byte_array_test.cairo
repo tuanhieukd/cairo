@@ -1,4 +1,3 @@
-use core::test::test_utils::assert_eq;
 use core::to_byte_array::{FormatAsByteArray, AppendFormattedToByteArray};
 
 #[test]
@@ -7,34 +6,34 @@ fn test_to_string_hex() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(hex_base);
-    assert_eq(@serialized, @expected_string, 'Bad hex representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "a";
     let serialized = 0xa_u8.format_as_byte_array(hex_base);
-    assert_eq(@serialized, @expected_string, 'Bad hex representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "6f";
     let serialized = 0x6f_u8.format_as_byte_array(hex_base);
-    assert_eq(@serialized, @expected_string, 'Bad hex representation of 111');
+    assert!(serialized == expected_string);
 
     let expected_string = "ff";
     let serialized = 0xff_u8.format_as_byte_array(hex_base);
-    assert_eq(@serialized, @expected_string, 'Bad hex representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "6f";
     let serialized = 0x6f_u16.format_as_byte_array(base: 16_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 hex representation');
+    assert!(serialized == expected_string);
     let serialized = 0x6f_u32.format_as_byte_array(base: 16_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 hex representation');
+    assert!(serialized == expected_string);
     let serialized = 0x6f_u64.format_as_byte_array(base: 16_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 hex representation');
+    assert!(serialized == expected_string);
     let serialized = 0x6f_u128.format_as_byte_array(base: 16_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 hex representation');
+    assert!(serialized == expected_string);
     let serialized = 0x6f_u256.format_as_byte_array(base: 16_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 hex representation');
+    assert!(serialized == expected_string);
     let serialized = 0x6f_felt252.format_as_byte_array(base: 16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 hex representation');
+    assert!(serialized == expected_string);
 }
 #[test]
 fn test_to_string_dec() {
@@ -42,34 +41,34 @@ fn test_to_string_dec() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(dec_base);
-    assert_eq(@serialized, @expected_string, 'Bad dec representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "10";
     let serialized = 10_u8.format_as_byte_array(dec_base);
-    assert_eq(@serialized, @expected_string, 'Bad dec representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "111";
     let serialized = 111_u8.format_as_byte_array(dec_base);
-    assert_eq(@serialized, @expected_string, 'Bad dec representation of 111');
+    assert!(serialized == expected_string);
 
     let expected_string = "255";
     let serialized = 255_u8.format_as_byte_array(dec_base);
-    assert_eq(@serialized, @expected_string, 'Bad dec representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "111";
     let serialized = 111_u16.format_as_byte_array(base: 10_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 dec representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u32.format_as_byte_array(base: 10_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 dec representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u64.format_as_byte_array(base: 10_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 dec representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u128.format_as_byte_array(base: 10_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 dec representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u256.format_as_byte_array(base: 10_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 dec representation');
+    assert!(serialized == expected_string);
     let serialized = 111_felt252.format_as_byte_array(base: 10.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 dec representation');
+    assert!(serialized == expected_string);
 }
 
 #[test]
@@ -78,34 +77,34 @@ fn test_to_string_oct() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(oct_base);
-    assert_eq(@serialized, @expected_string, 'Bad oct representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "12";
     let serialized = 10_u8.format_as_byte_array(oct_base);
-    assert_eq(@serialized, @expected_string, 'Bad oct representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "157";
     let serialized = 111_u8.format_as_byte_array(oct_base);
-    assert_eq(@serialized, @expected_string, 'Bad oct representation of 111');
+    assert!(serialized == expected_string);
 
     let expected_string = "377";
     let serialized = 255_u8.format_as_byte_array(oct_base);
-    assert_eq(@serialized, @expected_string, 'Bad oct representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "157";
     let serialized = 111_u16.format_as_byte_array(base: 8_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 oct representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u32.format_as_byte_array(base: 8_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 oct representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u64.format_as_byte_array(base: 8_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 oct representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u128.format_as_byte_array(base: 8_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 oct representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u256.format_as_byte_array(base: 8_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 oct representation');
+    assert!(serialized == expected_string);
     let serialized = 111_felt252.format_as_byte_array(base: 8.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 oct representation');
+    assert!(serialized == expected_string);
 }
 
 #[test]
@@ -114,34 +113,34 @@ fn test_to_string_bin() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(bin_base);
-    assert_eq(@serialized, @expected_string, 'Bad bin representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "1010";
     let serialized = 10_u8.format_as_byte_array(bin_base);
-    assert_eq(@serialized, @expected_string, 'Bad bin representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "1101111";
     let serialized = 111_u8.format_as_byte_array(bin_base);
-    assert_eq(@serialized, @expected_string, 'Bad bin representation of 111');
+    assert!(serialized == expected_string);
 
     let expected_string = "11111111";
     let serialized = 255_u8.format_as_byte_array(bin_base);
-    assert_eq(@serialized, @expected_string, 'Bad bin representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "1101111";
     let serialized = 111_u16.format_as_byte_array(base: 2_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 bin representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u32.format_as_byte_array(base: 2_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 bin representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u64.format_as_byte_array(base: 2_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 bin representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u128.format_as_byte_array(base: 2_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 bin representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u256.format_as_byte_array(base: 2_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 bin representation');
+    assert!(serialized == expected_string);
     let serialized = 111_felt252.format_as_byte_array(base: 2.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 bin representation');
+    assert!(serialized == expected_string);
 }
 
 #[test]
@@ -150,34 +149,34 @@ fn test_to_string_base7() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(base7);
-    assert_eq(@serialized, @expected_string, 'Bad b7 representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "13";
     let serialized = 10_u8.format_as_byte_array(base7);
-    assert_eq(@serialized, @expected_string, 'Bad b7 representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "216";
     let serialized = 111_u8.format_as_byte_array(base7);
-    assert_eq(@serialized, @expected_string, 'Bad b7 representation of 111');
+    assert!(serialized == expected_string);
 
     let expected_string = "513";
     let serialized = 255_u8.format_as_byte_array(base7);
-    assert_eq(@serialized, @expected_string, 'Bad b7 representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "216";
     let serialized = 111_u16.format_as_byte_array(base: 7_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 b7 representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u32.format_as_byte_array(base: 7_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 b7 representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u64.format_as_byte_array(base: 7_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 b7 representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u128.format_as_byte_array(base: 7_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 b7 representation');
+    assert!(serialized == expected_string);
     let serialized = 111_u256.format_as_byte_array(base: 7_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 b7 representation');
+    assert!(serialized == expected_string);
     let serialized = 111_felt252.format_as_byte_array(base: 7.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 b7 representation');
+    assert!(serialized == expected_string);
 }
 
 #[test]
@@ -186,34 +185,34 @@ fn test_to_string_base36() {
 
     let expected_string = "0";
     let serialized = 0_u8.format_as_byte_array(base36);
-    assert_eq(@serialized, @expected_string, 'Bad b36 representation of 0');
+    assert!(serialized == expected_string);
 
     let expected_string = "a";
     let serialized = 10_u8.format_as_byte_array(base36);
-    assert_eq(@serialized, @expected_string, 'Bad b36 representation of 10');
+    assert!(serialized == expected_string);
 
     let expected_string = "3z";
     let serialized = 143_u8.format_as_byte_array(base36);
-    assert_eq(@serialized, @expected_string, 'Bad b36 representation of 143');
+    assert!(serialized == expected_string);
 
     let expected_string = "73";
     let serialized = 255_u8.format_as_byte_array(base36);
-    assert_eq(@serialized, @expected_string, 'Bad b36 representation of 255');
+    assert!(serialized == expected_string);
 
     // Other uint types:
     let expected_string = "3z";
     let serialized = 143_u16.format_as_byte_array(base: 36_u16.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u16 b36 representation');
+    assert!(serialized == expected_string);
     let serialized = 143_u32.format_as_byte_array(base: 36_u32.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u32 b36 representation');
+    assert!(serialized == expected_string);
     let serialized = 143_u64.format_as_byte_array(base: 36_u64.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u64 b36 representation');
+    assert!(serialized == expected_string);
     let serialized = 143_u128.format_as_byte_array(base: 36_u128.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u128 b36 representation');
+    assert!(serialized == expected_string);
     let serialized = 143_u256.format_as_byte_array(base: 36_u256.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad u256 b36 representation');
+    assert!(serialized == expected_string);
     let serialized = 143_felt252.format_as_byte_array(base: 36.try_into().unwrap());
-    assert_eq(@serialized, @expected_string, 'Bad felt252 b36 representation');
+    assert!(serialized == expected_string);
 }
 
 #[test]
@@ -221,29 +220,29 @@ fn test_append() {
     let expected = "prefix_6f";
     let mut byte_array = "prefix_";
     111_u8.append_formatted_to_byte_array(ref byte_array, base: 16_u8.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u8');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111_u16.append_formatted_to_byte_array(ref byte_array, base: 16_u16.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u16');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111_u32.append_formatted_to_byte_array(ref byte_array, base: 16_u32.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u32');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111_u64.append_formatted_to_byte_array(ref byte_array, base: 16_u64.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u64');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111_u128.append_formatted_to_byte_array(ref byte_array, base: 16_u128.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u128');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111_u256.append_formatted_to_byte_array(ref byte_array, base: 16_u256.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append u256');
+    assert!(byte_array == expected);
 
     let mut byte_array = "prefix_";
     111.append_formatted_to_byte_array(ref byte_array, base: 16.try_into().unwrap());
-    assert_eq(@byte_array, @expected, 'Bad append felt252');
+    assert!(byte_array == expected);
 }

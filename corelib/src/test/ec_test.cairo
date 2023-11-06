@@ -17,8 +17,8 @@ fn test_ec_operations() {
     let p = EcPointTrait::new_from_x(1).unwrap();
     let p_nz = p.try_into().unwrap();
     let (x, y) = p_nz.coordinates();
-    assert_eq(@x, @1, 'x != 1');
-    assert(y == beta_p2_root || y == -beta_p2_root, 'y is wrong');
+    assert!(x == 1);
+    assert!(y == beta_p2_root || y == -beta_p2_root);
 
     let mut state = EcStateTrait::init();
     state.add(p_nz);
@@ -45,7 +45,7 @@ fn test_ec_operations() {
         @75984168971785666410219869038140038216102669781812169677875295511117260233,
         'bad double x'
     );
-    assert(double_y == expected_double_y || double_y == -expected_double_y, 'bad double y');
+    assert!(double_y == expected_double_y || double_y == -expected_double_y);
 
     // Compute `2p - p`.
     let (sub_x, sub_y) = (double_p - p).try_into().unwrap().coordinates();
@@ -54,7 +54,7 @@ fn test_ec_operations() {
 
     // Compute `p - p`.
     let p_diff: Option<NonZero<EcPoint>> = (p - p).try_into();
-    assert(p_diff.is_none(), 'p - p did not return 0.');
+    assert!(p_diff.is_none(), "p - p did not return 0.");
 
     // Compute `(-p) - p`.
     let (sub2_x, sub2_y) = (-p - p).try_into().unwrap().coordinates();
@@ -72,7 +72,7 @@ fn test_bad_ec_point_creation() {
 fn test_ec_point_finalization_zero() {
     let state = EcStateTrait::init();
     let point_at_infinity = state.finalize_nz();
-    assert(point_at_infinity.is_none(), 'Wrong point');
+    assert!(point_at_infinity.is_none());
 }
 
 #[test]
@@ -116,13 +116,11 @@ fn test_ecdsa_recover_public_key() {
     let message_hash = 0x503f4bea29baee10b22a7f10bdc82dda071c977c1f25b8f3973d34e6b03b2c;
     let signature_r = 0xbe96d72eb4f94078192c2e84d5230cde2a70f4b45c8797e2c907acff5060bb;
     let signature_s = 0x677ae6bba6daf00d2631fab14c8acf24be6579f9d9e98f67aa7f2770e57a1f5;
-    assert_eq(
-        @ecdsa::recover_public_key(:message_hash, :signature_r, :signature_s, y_parity: false)
-            .unwrap(),
-        @0x7b7454acbe7845da996377f85eb0892044d75ae95d04d3325a391951f35d2ec,
-        'recover_ecdsa_public_key failed'
+    assert!(
+        ecdsa::recover_public_key(:message_hash, :signature_r, :signature_s, y_parity: false)
+            .unwrap() == 0x7b7454acbe7845da996377f85eb0892044d75ae95d04d3325a391951f35d2ec
     );
-    assert(
+    assert!(
         ecdsa::check_ecdsa_signature(
             :message_hash,
             public_key: ecdsa::recover_public_key(
@@ -131,8 +129,7 @@ fn test_ecdsa_recover_public_key() {
                 .unwrap(),
             :signature_r,
             :signature_s
-        ),
-        'ecdsa returned false'
+        )
     );
 }
 

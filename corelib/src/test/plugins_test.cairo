@@ -1,5 +1,3 @@
-use core::test::test_utils::assert_eq;
-
 #[derive(Copy, Debug, Drop, Serde, PartialEq)]
 enum EnumForSerde {
     A,
@@ -34,32 +32,12 @@ fn test_derive_serde_enum() {
     b.serialize(ref output);
     a.serialize(ref output);
     let mut serialized = output.span();
-    assert_eq(
-        @Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read'),
-        @a,
-        'expected a'
-    );
-    assert_eq(
-        @Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read'),
-        @a,
-        'expected a'
-    );
-    assert_eq(
-        @Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read'),
-        @c,
-        'expected c'
-    );
-    assert_eq(
-        @Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read'),
-        @b,
-        'expected b'
-    );
-    assert_eq(
-        @Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read'),
-        @a,
-        'expected a'
-    );
-    assert(serialized.is_empty(), 'expected empty');
+    assert!(Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read') == a);
+    assert!(Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read') == a);
+    assert!(Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read') == c);
+    assert!(Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read') == b);
+    assert!(Serde::<EnumForSerde>::deserialize(ref serialized).expect('failed to read') == a);
+    assert!(serialized.is_empty());
 }
 
 #[test]

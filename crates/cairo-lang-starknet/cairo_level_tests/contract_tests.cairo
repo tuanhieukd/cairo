@@ -121,7 +121,7 @@ fn read_first_value() {
 
 #[test]
 fn write_read_value() {
-    assert(test_contract::__external::set_value(serialized(4)).is_empty(), 'Not empty');
+    assert!(test_contract::__external::set_value(serialized(4)).is_empty());
     assert_eq(
         @test_contract::__external::get_value(serialized(())), @serialized(4), 'Wrong result'
     );
@@ -129,21 +129,21 @@ fn write_read_value() {
 
 #[test]
 fn empty_start() {
-    assert_eq(@test_contract::__external::contains(serialized(4)), @serialized(0), 'Wrong result');
+    assert!(test_contract::__external::contains(serialized(4)) == serialized(0));
 }
 
 #[test]
 fn contains_added() {
-    assert(test_contract::__external::insert(serialized(4)).is_empty(), 'Not empty');
-    assert_eq(@test_contract::__external::contains(serialized(4)), @serialized(1), 'Wrong result');
-    assert_eq(@test_contract::__external::contains(serialized(5)), @serialized(0), 'Wrong result');
+    assert!(test_contract::__external::insert(serialized(4)).is_empty());
+    assert!(test_contract::__external::contains(serialized(4)) == serialized(1));
+    assert!(test_contract::__external::contains(serialized(5)) == serialized(0));
 }
 
 #[test]
 fn not_contains_removed() {
-    assert(test_contract::__external::insert(serialized(4)).is_empty(), 'Not empty');
-    assert(test_contract::__external::remove(serialized(4)).is_empty(), 'Not empty');
-    assert_eq(@test_contract::__external::contains(serialized(4)), @serialized(0), 'Wrong result');
+    assert!(test_contract::__external::insert(serialized(4)).is_empty());
+    assert!(test_contract::__external::remove(serialized(4)).is_empty());
+    assert!(test_contract::__external::contains(serialized(4)) == serialized(0));
 }
 
 #[test]
@@ -178,7 +178,7 @@ fn test_get_block_info() {
     let info = starknet::get_block_info().unbox();
     assert_eq!(info.block_number, 0_u64);
     assert_eq!(info.block_timestamp, 0_u64);
-    assert(info.sequencer_address.is_zero(), 'non default sequencer_address');
+    assert!(info.sequencer_address.is_zero());
     starknet::testing::set_block_number(1_u64);
     starknet::testing::set_block_timestamp(2_u64);
     starknet::testing::set_sequencer_address(starknet::contract_address_const::<3>());
@@ -190,28 +190,28 @@ fn test_get_block_info() {
 
 #[test]
 fn test_get_caller_address() {
-    assert(starknet::get_caller_address().is_zero(), 'non default value');
+    assert!(starknet::get_caller_address().is_zero());
     starknet::testing::set_caller_address(starknet::contract_address_const::<1>());
     assert_eq!(starknet::get_caller_address().into(), 1);
 }
 
 #[test]
 fn test_get_contract_address() {
-    assert(starknet::get_contract_address().is_zero(), 'non default value');
+    assert!(starknet::get_contract_address().is_zero());
     starknet::testing::set_contract_address(starknet::contract_address_const::<1>());
     assert_eq!(starknet::get_contract_address().into(), 1);
 }
 
 #[test]
 fn test_get_version() {
-    assert(starknet::get_tx_info().unbox().version.is_zero(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().version.is_zero());
     starknet::testing::set_version(1);
     assert_eq!(starknet::get_tx_info().unbox().version, 1_felt252);
 }
 
 #[test]
 fn test_get_account_contract_address() {
-    assert(starknet::get_tx_info().unbox().account_contract_address.is_zero(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().account_contract_address.is_zero());
     starknet::testing::set_account_contract_address(starknet::contract_address_const::<1>());
     assert_eq(
         @starknet::get_tx_info().unbox().account_contract_address.into(), @1, 'not set value'
@@ -227,28 +227,28 @@ fn test_get_max_fee() {
 
 #[test]
 fn test_get_transaction_hash() {
-    assert(starknet::get_tx_info().unbox().transaction_hash.is_zero(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().transaction_hash.is_zero());
     starknet::testing::set_transaction_hash(1);
     assert_eq!(starknet::get_tx_info().unbox().transaction_hash, 1_felt252);
 }
 
 #[test]
 fn test_get_chain_id() {
-    assert(starknet::get_tx_info().unbox().chain_id.is_zero(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().chain_id.is_zero());
     starknet::testing::set_chain_id(1);
     assert_eq!(starknet::get_tx_info().unbox().chain_id, 1_felt252);
 }
 
 #[test]
 fn test_get_nonce() {
-    assert(starknet::get_tx_info().unbox().nonce.is_zero(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().nonce.is_zero());
     starknet::testing::set_nonce(1);
     assert_eq!(starknet::get_tx_info().unbox().nonce, 1_felt252);
 }
 
 #[test]
 fn test_get_signature() {
-    assert(starknet::get_tx_info().unbox().signature.is_empty(), 'non default value');
+    assert!(starknet::get_tx_info().unbox().signature.is_empty());
     starknet::testing::set_signature(array!['some', 'signature'].span());
     let read_signature = starknet::get_tx_info().unbox().signature;
     assert_eq!(read_signature.len(), 2);
@@ -311,7 +311,7 @@ fn event_serde_tester<T, +starknet::Event<T>, +Clone<T>, +PartialEq<T>, +Drop<T>
     let mut keys = keys.span();
     let mut data = data.span();
     let mut event = starknet::Event::deserialize(ref keys, ref data).unwrap();
-    assert_eq(@event, @original_event, 'Event deserialization failed');
+    assert!(event == original_event);
 }
 
 #[test]
@@ -332,15 +332,14 @@ fn test_dispatcher_serde() {
     let mut calldata = Default::default();
     Serde::serialize(@contract0, ref calldata);
     let mut calldata_span = calldata.span();
-    assert(
-        calldata_span.len() == 1 || *calldata_span.pop_front().unwrap() == contract_address.into(),
-        'Serialize to 0'
+    assert!(
+        calldata_span.len() == 1 || *calldata_span.pop_front().unwrap() == contract_address.into()
     );
 
     // Deserialize
     let mut serialized = calldata.span();
     let contract0: ITestContractDispatcher = Serde::deserialize(ref serialized).unwrap();
-    assert(contract0.contract_address == contract_address, 'Deserialize to Dispatcher');
+    assert!(contract0.contract_address == contract_address);
 
     // Library Dispatcher
     let class_hash = test_contract::TEST_CLASS_HASH.try_into().unwrap();
@@ -358,5 +357,5 @@ fn test_dispatcher_serde() {
     // Deserialize
     let mut serialized = calldata.span();
     let contract1: ITestContractLibraryDispatcher = Serde::deserialize(ref serialized).unwrap();
-    assert(contract1.class_hash == class_hash, 'Deserialize to Dispatcher');
+    assert!(contract1.class_hash == class_hash);
 }

@@ -2,7 +2,6 @@ use starknet::{
     ClassHash, ContractAddress, EthAddress, StorageAddress, SyscallResult,
     storage_address_to_felt252, storage_address_try_from_felt252
 };
-use core::test::test_utils::assert_eq;
 use super::utils::serialized;
 use core::integer::BoundedInt;
 use core::zeroable::Zeroable;
@@ -106,5 +105,5 @@ fn write_read_struct() {
     };
 
     assert!(test_contract::__external::set_data(serialized(*@x)).is_empty());
-    assert_eq(@test_contract::__external::get_data(serialized(())), @serialized(x), 'Wrong result');
+    assert!(test_contract::__external::get_data(serialized(())) == serialized(x));
 }
