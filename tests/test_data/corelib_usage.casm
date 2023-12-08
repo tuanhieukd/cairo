@@ -5,3 +5,4 @@ ret;
 [ap + 0] = 1, ap++;
 [ap + 0] = 0, ap++;
 ret;
+jmp rel 6 if [fp + -5] != 1;
