@@ -11,3 +11,4 @@ fn simple_test() {
     assert_eq!(bst.value, 12);
     assert!(bst.left.is_none(), "left should be none");
 }
+ 
